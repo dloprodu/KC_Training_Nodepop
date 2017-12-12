@@ -10,7 +10,7 @@ const index = require('./routes/index');
 const app = express();
 
 // load db connector
-require('./lib/connectMongoose');
+require('./lib/mongooseConnection');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
