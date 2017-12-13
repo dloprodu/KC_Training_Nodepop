@@ -1,0 +1,142 @@
+[
+    {
+        "name": "Adam",
+        "gender": "male",
+        "thumbnail": "images/users/200x200/Adam.jpg",
+        "email": "adam@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Alex",
+        "gender": "male",
+        "thumbnail": "images/users/200x200/Alex.jpg",
+        "email": "alex@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Ana",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Ana.jpg",
+        "email": "ana@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Andrea",
+        "gender": "male",
+        "thumbnail": "images/users/200x200/Andrea.jpg",
+        "email": "andrea@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Carla",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Carla.jpg",
+        "email": "carla@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Cris",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Cris.jpg",
+        "email": "cris@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "David",
+        "gender": "male",
+        "thumbnail": "images/users/200x200/David.jpg",
+        "email": "david@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Elisabeth",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Elisabeth.jpg",
+        "email": "elisabeth@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Emma",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Emma.jpg",
+        "email": "emma@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "John",
+        "gender": "male",
+        "thumbnail": "images/users/200x200/John.jpg",
+        "email": "john@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Judit",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Adam.jpg",
+        "email": "adam@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Leo",
+        "gender": "male",
+        "thumbnail": "images/users/200x200/Leo.jpg",
+        "email": "leo@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Peter",
+        "gender": "male",
+        "thumbnail": "images/users/200x200/Peter.jpg",
+        "email": "peter@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Rachel",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Rachel.jpg",
+        "email": "rachel@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Richard",
+        "gender": "male",
+        "thumbnail": "images/users/200x200/Richard.jpg",
+        "email": "richard@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Samanta",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Samanta.jpg",
+        "email": "samanta@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Sofia",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Sofia.jpg",
+        "email": "sofia@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Steve",
+        "gender": "male",
+        "thumbnail": "images/users/200x200/Steve.jpg",
+        "email": "steve@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Vega",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Vega.jpg",
+        "email": "vega@test.com",
+        "password": "1234"
+    },
+    {
+        "name": "Vicky",
+        "gender": "female",
+        "thumbnail": "images/users/200x200/Vicky.jpg",
+        "email": "vicky@test.com",
+        "password": "1234"
+    }
+]

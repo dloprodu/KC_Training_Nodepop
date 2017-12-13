@@ -3,13 +3,22 @@
 const mongoose = require('mongoose');
 
 const AdSchema = mongoose.Schema({
+    type:        { type: String, default: 'ad' },
+    user:        { type: Schema.Types.ObjectId, ref: 'User' },
     name:        { type: String, required: [true, 'NAME_REQUIRED'], index: true },
     description: { type: String, required: [true, 'DESCRIPTION_REQUIRED'] },
-    type:        { type: String, default: 'ad' },
     forSale:     { type: Boolean, default: true },
     price:       { type: Number, min: [0, 'PRICE_GTE_0'] },
     photo:       { type: String },
-    tags:        { type: [String] },
+    tags:        { 
+        type: [{type: String, enum: [['work', 'lifestyle', 'motor', 'mobile'], 'UNKNOWN_TAG']}],
+        validate: {
+            validator: function(v) {
+                return (v && v.length > 0);
+            },
+            message: 'EMAIL_NOT_VALID'
+        }
+    },
     createdAt:   { type: Date, default: Date.now }
 }, { collection: 'ads' }); // si no se indica collections tomara el nombre
                            // del model en minuscula y pluralizado
@@ -28,6 +37,15 @@ AdSchema.statics.list = (filters, skip, limit, sort, fields) => {
 
     return query.exec();
 };
+
+// Hooks
+AdSchema.pre('save', function(next) {
+    var ad = this;
+    
+    // TODO: remove duplicate tags
+
+    next();
+});
 
 const Ad = mongoose.model('Ad', AdSchema);
 

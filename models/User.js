@@ -5,8 +5,9 @@ const bcrypt = require('bcryptjs');
 const validator = require('validator');
 
 const UserSchema = mongoose.Schema({
-    name:      { type: String, required: [true, 'NAME_REQUIRED'], index: true },
     type:      { type: String, default: 'user' },
+    name:      { type: String, required: [true, 'NAME_REQUIRED'], index: true },
+    gender:    { type: String, require: [true, 'GENDER_REQUIRED'], enum: [['male', 'female'], 'UNKNOWN_GENDER'] },
     thumbnail: { type: String },
     email:     { 
         type: String, 
@@ -50,7 +51,6 @@ UserSchema.methods.comparePassword = function(candidatePassword, callback) {
 
 // Hooks
 UserSchema.pre('save', function(next) {
-    // do stuff
     var user = this;
     
     // only hash the password if it has been modified (or is new)
