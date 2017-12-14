@@ -5,11 +5,22 @@ const bcrypt = require('bcryptjs');
 const validator = require('validator');
 
 const UserSchema = mongoose.Schema({
-    type:      { type: String, default: 'user' },
-    name:      { type: String, required: [true, 'NAME_REQUIRED'], maxLength: [255, 'NAME_TOO_LONG'], trim: true, index: true },
-    gender:    { type: String, require: [true, 'GENDER_REQUIRED'], enum: { values: ['male', 'female'], message: 'UNKNOWN_GENDER' } },
+    type: { type: String, default: 'user' },
+    name: { 
+        type: String, 
+        required: [true, 'NAME_REQUIRED'], 
+        minLength: [3, 'NAME_TOO_SHORT'], 
+        maxLength: [255, 'NAME_TOO_LONG'], 
+        trim: true, 
+        index: true 
+    },
+    gender: { 
+        type: String, 
+        require: [true, 'GENDER_REQUIRED'], 
+        enum: { values: ['male', 'female'], message: 'UNKNOWN_GENDER' } 
+    },
     thumbnail: { type: String },
-    email:     { 
+    email: { 
         type: String, 
         required: [true, 'EMAIL_REQUIRED'], 
         validate: {
@@ -22,22 +33,13 @@ const UserSchema = mongoose.Schema({
         index: true, 
         unique: true 
     },
-    password:  { type: String, required: [true, 'PASSWORD_REQUIRED'] },
+    password: { type: String, required: [true, 'PASSWORD_REQUIRED'] },
     createdAt: { type: Date, default: Date.now }
 }, { collection: 'users' }); // si no se indica collections tomara el nombre
                              // del model en minuscula y pluralizado
 
 // Static methods
-UserSchema.statics.list = (filters, skip, limit, sort, fields) => {
-    const query = Agente.find(filters);
 
-    query.skip(skip);
-    query.limit(limit);
-    query.sort(sort);
-    query.select(fields);
-
-    return query.exec();
-};
 
 // Instance methods
 UserSchema.methods.comparePassword = function(candidatePassword, callback) {

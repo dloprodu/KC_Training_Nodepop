@@ -2,25 +2,37 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const TAGS = ['work', 'lifestyle', 'motor', 'mobile'];
 
 const AdSchema = mongoose.Schema({
-    type:        { type: String, default: 'ad' },
-    user:        { type: Schema.Types.ObjectId, ref: 'User' },
-    name:        { type: String, required: [true, 'NAME_REQUIRED'], maxLength: [255, 'NAME_TOO_LONG'], index: true, trim: true },
-    description: { type: String, required: [true, 'DESCRIPTION_REQUIRED'], maxLength: [1024, 'DESCRIPTION_TOO_LONG'] },
-    forSale:     { type: Boolean, default: true },
-    price:       { type: Number, min: [0, 'PRICE_GTE_0'] },
-    photo:       { type: String },
-    tags:        { 
-        type: [{type: String, enum: { values: ['work', 'lifestyle', 'motor', 'mobile'], message: 'UNKNOWN_TAG'} }],
+    type: { type: String, default: 'ad' },
+    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    name: { 
+        type: String, 
+        required: [true, 'NAME_REQUIRED'], 
+        minLength: [3, 'NAME_TOO_SHORT'], 
+        maxLength: [255, 'NAME_TOO_LONG'], 
+        index: true, 
+        trim: true 
+    },
+    description: { 
+        type: String, 
+        required: [true, 'DESCRIPTION_REQUIRED'], 
+        maxLength: [1024, 'DESCRIPTION_TOO_LONG'] 
+    },
+    forSale: { type: Boolean, default: true },
+    price: { type: Number, min: [0, 'PRICE_GTE_0'] },
+    photo: { type: String },
+    tags: { 
+        type: [{type: String, enum: { values: TAGS, message: 'UNKNOWN_TAG'} }],
         validate: {
             validator: function(v) {
                 return (v && v.length > 0);
             },
-            message: 'EMAIL_NOT_VALID'
+            message: 'AT_LEAST_ONE_TAG'
         }
     },
-    createdAt:   { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now }
 }, { collection: 'ads' }); // si no se indica collections tomara el nombre
                            // del model en minuscula y pluralizado
 
@@ -28,15 +40,65 @@ const AdSchema = mongoose.Schema({
 AdSchema.index({name: 'text', description: 'text', tags: 'text'});
 
 // Static methods
-AdSchema.statics.list = (filters, skip, limit, sort, fields) => {
-    const query = Agente.find(filters);
+AdSchema.statics.getTags = () => {
+    return TAGS.slice();;
+};
 
-    query.skip(skip);
-    query.limit(limit);
+/**
+ * Retun ads list.
+ * @param filters
+ *  - tag
+ *  - forSale: false | true
+ *  - price: 0-50 | 10- | -50 | 50
+ *  - name: Regex /^name/i
+ * @param page
+ * @param per_page
+ * @param sort
+ * @param fields
+ */
+AdSchema.statics.list = async (filters, page, per_page, sort, fields) => {
+    // Remove undefine filters
+    for (let key in filters) {
+        if (!filters[key]) {
+            delete filters[key];
+            continue;
+        }
+
+        switch (key) {
+            case 'price':
+                const range = filters[key].split('-');
+                if (range.length == 1) {
+                    filters[key] = range[0];
+                } else if (!range[0]) {
+                    filters[key] = { $lte: range[1] };
+                } else if (!range[1]) {
+                    filters[key] = { $gte: range[0] };
+                } else {
+                    filters[key] = { $gte: range[0], $lte: range[1] };
+                }
+                break;
+
+            case 'name':
+                filters[key] = new RegExp('^' + filters[key], 'i');
+                break;
+
+            case 'tags':
+                filters[key] = { $in: filters[key].split(',') };
+                //delete filters[key];
+                break;
+        }
+    }
+
+    const count = await Ad.find(filters).count();
+    const query = Ad.find(filters);
+    console.log('count:', count);
+
+    query.skip(page);
+    query.limit(per_page);
     query.sort(sort);
     query.select(fields);
 
-    return query.exec();
+    return { total: count, rows: await query.exec() };
 };
 
 // Hooks
