@@ -6,8 +6,8 @@ const validator = require('validator');
 
 const UserSchema = mongoose.Schema({
     type:      { type: String, default: 'user' },
-    name:      { type: String, required: [true, 'NAME_REQUIRED'], maxLength: [255, 'NAME_TOO_LONG'], index: true },
-    gender:    { type: String, require: [true, 'GENDER_REQUIRED'], enum: [['male', 'female'], 'UNKNOWN_GENDER'] },
+    name:      { type: String, required: [true, 'NAME_REQUIRED'], maxLength: [255, 'NAME_TOO_LONG'], trim: true, index: true },
+    gender:    { type: String, require: [true, 'GENDER_REQUIRED'], enum: { values: ['male', 'female'], message: 'UNKNOWN_GENDER' } },
     thumbnail: { type: String },
     email:     { 
         type: String, 
@@ -18,6 +18,7 @@ const UserSchema = mongoose.Schema({
             },
             message: 'EMAIL_NOT_VALID'
         },
+        trim: true,
         index: true, 
         unique: true 
     },
@@ -59,7 +60,7 @@ UserSchema.pre('save', function(next) {
     }
 
     // generate a salt
-    bcrypt.genSalt(process.env.SALT_WORK_FACTOR, function(err, salt) {
+    bcrypt.genSalt(parseInt( process.env.SALT_WORK_FACTOR ), function(err, salt) {
         if (err) {
             return next(err);
         }
