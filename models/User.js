@@ -6,7 +6,7 @@ const validator = require('validator');
 
 const UserSchema = mongoose.Schema({
     type:      { type: String, default: 'user' },
-    name:      { type: String, required: [true, 'NAME_REQUIRED'], index: true },
+    name:      { type: String, required: [true, 'NAME_REQUIRED'], maxLength: [255, 'NAME_TOO_LONG'], index: true },
     gender:    { type: String, require: [true, 'GENDER_REQUIRED'], enum: [['male', 'female'], 'UNKNOWN_GENDER'] },
     thumbnail: { type: String },
     email:     { 

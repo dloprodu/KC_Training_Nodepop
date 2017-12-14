@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const AdSchema = mongoose.Schema({
     type:        { type: String, default: 'ad' },
     user:        { type: Schema.Types.ObjectId, ref: 'User' },
-    name:        { type: String, required: [true, 'NAME_REQUIRED'], index: true },
-    description: { type: String, required: [true, 'DESCRIPTION_REQUIRED'] },
+    name:        { type: String, required: [true, 'NAME_REQUIRED'], maxLength: [255, 'NAME_TOO_LONG'], index: true },
+    description: { type: String, required: [true, 'DESCRIPTION_REQUIRED'], maxLength: [1024, 'DESCRIPTION_TOO_LONG'] },
     forSale:     { type: Boolean, default: true },
     price:       { type: Number, min: [0, 'PRICE_GTE_0'] },
     photo:       { type: String },

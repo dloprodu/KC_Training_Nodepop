@@ -1,0 +1,402 @@
+[
+    {
+        "name": "Mountain Bike",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/01.jpg",
+        "tags": []
+    },
+    {
+        "name": "Bike Vintage",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/02.jpg",
+        "tags": []
+    },
+    {
+        "name": "Bike",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/03.jpg",
+        "tags": []
+    },
+    {
+        "name": "Mountain Bike",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/04.jpg",
+        "tags": []
+    },
+    {
+        "name": "Clothes",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/05.jpg",
+        "tags": []
+    },
+    {
+        "name": "Clothes and shoes",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/06.jpg",
+        "tags": []
+    },
+    {
+        "name": "Sweater",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/07.jpg",
+        "tags": []
+    },
+    {
+        "name": "Nice shoes",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/08.jpg",
+        "tags": []
+    },
+    {
+        "name": "iPad Pro and MacBook",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/09.jpg",
+        "tags": []
+    },
+    {
+        "name": "MacBook Pro 15",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/10.jpg",
+        "tags": []
+    },
+    {
+        "name": "Mobile Azus",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/11.jpg",
+        "tags": []
+    },
+    {
+        "name": "iPhone 5s",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/12.jpg",
+        "tags": []
+    },
+    {
+        "name": "Samsung Galaxy VII",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/13.jpg",
+        "tags": []
+    },
+    {
+        "name": "Smartphone",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/14.jpg",
+        "tags": []
+    },
+    {
+        "name": "iPhone 6 Plus",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/15.jpg",
+        "tags": []
+    },
+    {
+        "name": "HTC One",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/16.jpg",
+        "tags": []
+    },
+    {
+        "name": "Smansung Galaxy VIII",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/17.jpg",
+        "tags": []
+    },
+    {
+        "name": "Samsung Galaxy VI",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/18.jpg",
+        "tags": []
+    },
+    {
+        "name": "iPhone 6",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/19.jpg",
+        "tags": []
+    },
+    {
+        "name": "Red phone",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/20.jpg",
+        "tags": []
+    },
+    {
+        "name": "BMW X6 M",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/21.jpg",
+        "tags": []
+    },
+    {
+        "name": "Range Rover",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/22.jpg",
+        "tags": []
+    },
+    {
+        "name": "Mercedex Benz",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/23.jpg",
+        "tags": []
+    },
+    {
+        "name": "Audi A4",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/24.jpg",
+        "tags": []
+    },
+    {
+        "name": "BMW M240i",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/25.jpg",
+        "tags": []
+    },
+    {
+        "name": "Classic car",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/26.jpg",
+        "tags": []
+    },
+    {
+        "name": "Mercedes",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/27.jpg",
+        "tags": []
+    },
+    {
+        "name": "Sports Car",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/28.jpg",
+        "tags": []
+    },
+    {
+        "name": "Red Car",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/29.jpg",
+        "tags": []
+    },
+    {
+        "name": "Smart Car",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/30.jpg",
+        "tags": []
+    },
+    {
+        "name": "Motorbike",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/31.jpg",
+        "tags": []
+    },
+    {
+        "name": "Acer PC",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/32.jpg",
+        "tags": []
+    },
+    {
+        "name": "Miscellaneous tools",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/33.jpg",
+        "tags": []
+    },
+    {
+        "name": "Tools",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/34.jpg",
+        "tags": []
+    },
+    {
+        "name": "Keys Collection",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/35.jpg",
+        "tags": []
+    },
+    {
+        "name": "Tangles",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/36.jpg",
+        "tags": []
+    },
+    {
+        "name": "Swiss knife",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/37.jpg",
+        "tags": []
+    },
+    {
+        "name": "Professional microscope",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/38.jpg",
+        "tags": []
+    },
+    {
+        "name": "Iron Philips (Plancha)",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/39.jpg",
+        "tags": []
+    },
+    {
+        "name": "Mancuernas",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/40.jpg",
+        "tags": []
+    },
+    {
+        "name": "Raquetas de tenis",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/41.jpg",
+        "tags": []
+    },
+    {
+        "name": "Raquetas de badminton",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/42.jpg",
+        "tags": []
+    },
+    {
+        "name": "Dardos y diana",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/43.jpg",
+        "tags": []
+    },
+    {
+        "name": "Road bike",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/44.jpg",
+        "tags": []
+    },
+    {
+        "name": "Equipamiento de sky",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/45.jpg",
+        "tags": []
+    },
+    {
+        "name": "Patines",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/46.jpg",
+        "tags": []
+    },
+    {
+        "name": "Comba",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/47.jpg",
+        "tags": []
+    },
+    {
+        "name": "Pelota beisbol",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/48.jpg",
+        "tags": []
+    },
+    {
+        "name": "Dardos",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/49.jpg",
+        "tags": []
+    },
+    {
+        "name": "Harley Davidson",
+        "description": "",
+        "forSale": true,
+        "price": 0.0,
+        "photo": "images/ads/500x300/50.jpg",
+        "tags": []
+    }
+]
