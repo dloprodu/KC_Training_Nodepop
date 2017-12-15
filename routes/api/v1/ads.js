@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
+
 const { check, query, validationResult } = require('express-validator/check');
+
+const jwtAuth = require('../../../lib/jwtAuth');
 const Ad = require('../../../models/Ad');
+
+// Protected routes
+router.use(jwtAuth());
 
 /**
  * GET /
