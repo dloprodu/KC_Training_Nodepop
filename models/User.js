@@ -39,21 +39,13 @@ const UserSchema = mongoose.Schema({
                              // del model en minuscula y pluralizado
 
 // Static methods
-
-
-// Instance methods
-UserSchema.methods.comparePassword = function(candidatePassword, callback) {
-    bcrypt.compare(candidatePassword, this.password, function(err, match) {
-        if (err) { 
-            return callback(err) 
-        };
-
-        callback(null, match);
-    });
+UserSchema.statics.comparePassword = async (candidatePassword, hash) => {
+    const match = await bcrypt.compare(candidatePassword, hash);
+    return match;
 };
 
 // Hooks
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', (next) => {
     var user = this;
     
     // only hash the password if it has been modified (or is new)
@@ -62,13 +54,13 @@ UserSchema.pre('save', function(next) {
     }
 
     // generate a salt
-    bcrypt.genSalt(parseInt( process.env.SALT_WORK_FACTOR ), function(err, salt) {
+    bcrypt.genSalt(parseInt( process.env.SALT_WORK_FACTOR ), (err, salt) => {
         if (err) {
             return next(err);
         }
 
         // hash the password using our new salt
-        bcrypt.hash(user.password, salt, function(err, hash) {
+        bcrypt.hash(user.password, salt, (err, hash) => {
             if (err) {
                 return next(err);
             }
