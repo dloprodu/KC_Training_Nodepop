@@ -10,8 +10,8 @@ const fs = require("fs");
 const chance = new Chance();
 
 // JSON's
-let ads = JSON.parse( fs.readFileSync("db/ads.json") );
-let users = JSON.parse( fs.readFileSync("db/users.json") );
+let ads = JSON.parse( fs.readFileSync("data/ads.json") );
+let users = JSON.parse( fs.readFileSync("data/users.json") );
 
 // Models
 const User = require('./models/User');
@@ -58,7 +58,7 @@ async function createDB() {
                     ad.description = chance.paragraph();
                     ad.price = chance.floating({min: 10, max: 10000, fixed: 2});
                     ad.forSale = chance.bool();
-                    ad.tags = chance.pickset(['work', 'lifestyle', 'motor', 'mobile'], chance.integer({ min: 1, max: 3}));
+                    ad.tags = chance.pickset(Ad.getTags(), chance.integer({ min: 1, max: 3}));
     
                     try {
                         const adSaved = await ad.save();

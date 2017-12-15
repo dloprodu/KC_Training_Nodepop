@@ -24,8 +24,8 @@ router.get('/', [
   query('tags').optional(),
   query('for_sale').optional().isBoolean().withMessage('FOR_SALE_MUST_BE_BOOLEAN'),
   query('price').optional().matches(/^(\d+(\.\d+)?|-\d+(\.\d+)?|\d+(\.\d+)?-|\d+(\.\d+)?-\d+(\.\d+)?)$/).withMessage('PRICE_RANGE_NOT_VALID'),
-  query('page').isNumeric().withMessage('PAGE_MUST_BE_NUMERIC'),
-  query('per_page').optional().isNumeric().withMessage('PER_PAGE_MUST_BE_NUMERIC')
+  query('page').isInt( {min: 0} ).withMessage('PAGE_MUST_BE_NUMERIC'),
+  query('per_page').optional().isInt( {min: 1} ).withMessage('PER_PAGE_MUST_BE_NUMERIC')
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();

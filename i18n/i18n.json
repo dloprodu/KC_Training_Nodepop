@@ -1,0 +1,44 @@
+{
+    "en": {
+        "errors": {
+            "NAME_REQUIRED": "Name required",
+            "NAME_TOO_SHORT": "Name too short",
+            "NAME_TOO_LONG": "Name too long",
+            "DESCRIPTION_REQUIRED": "Description required",
+            "DESCRIPTION_TOO_LONG": "Description too long",
+            "PRICE_GTE_0": "Price greater than 0",
+            "UNKNOWN_TAG": "Unknown tag",
+            "AT_LEAST_ONE_TAG": "There must be at least one tag",
+            "GENDER_REQUIRED": "Gender required",
+            "UNKNOWN_GENDER": "Unknown gender",
+            "EMAIL_REQUIRED": "Email required",
+            "EMAIL_NOT_VALID": "Email is not valid",
+            "PASSWORD_REQUIRED": "Password required",
+            "FOR_SALE_MUST_BE_BOOLEAN": "'for_sale' must be a 'true' or 'false'",
+            "PRICE_RANGE_NOT_VALID": "'price' is not a valid range",
+            "PAGE_MUST_BE_NUMERIC": "'page' must be a numeric",
+            "PER_PAGE_MUST_BE_NUMERIC": "'per_page' must be a numeric"
+        }
+    },
+    "es": {
+        "errors": {
+            "NAME_REQUIRED": "El nombre es obligatorio",
+            "NAME_TOO_SHORT": "El nombre es demasiado corto",
+            "NAME_TOO_LONG": "El nombre es demasiado largo",
+            "DESCRIPTION_REQUIRED": "La descripción es obligatoria",
+            "DESCRIPTION_TOO_LONG": "La descripción es demasiado larga",
+            "PRICE_GTE_0": "El precio debe ser un número positivo",
+            "UNKNOWN_TAG": "Etiqueta desconocida",
+            "AT_LEAST_ONE_TAG": "Debes indicar almenos una etiqueta",
+            "GENDER_REQUIRED": "El género es obligatorio",
+            "UNKNOWN_GENDER": "El genero debe ser 'hombre' o 'mujer'",
+            "EMAIL_REQUIRED": "El email es obligatorio",
+            "EMAIL_NOT_VALID": "El email no es válido",
+            "PASSWORD_REQUIRED": "El password es obligatorio",
+            "FOR_SALE_MUST_BE_BOOLEAN": "'for_sale' debe ser ser 'true' or 'false'",
+            "PRICE_RANGE_NOT_VALID": "'price' no contiene un rango válido",
+            "PAGE_MUST_BE_NUMERIC": "'page' debe ser un múmero",
+            "PER_PAGE_MUST_BE_NUMERIC": "'per_page' debe ser un número"
+        }
+    }
+}
