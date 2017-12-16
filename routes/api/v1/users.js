@@ -8,7 +8,7 @@ const User = require('../../../models/User');
 
 /**
  * POST /signup
- * Sign up
+ * Sign up.
  */ 
 router.post('/signup', (req, res, next) => {
   const user = new User(req.body);
@@ -25,7 +25,7 @@ router.post('/signup', (req, res, next) => {
 
 /**
  * POST /signup
- * Log in
+ * Log in.
  */ 
 router.post('/login', [
     body('email').isEmail().withMessage('EMAIL_NOT_VALID')

@@ -36,16 +36,25 @@ const AdSchema = mongoose.Schema({
 }, { collection: 'ads' }); // si no se indica collections tomara el nombre
                            // del model en minuscula y pluralizado
 
+//#region Indexes
+
 // Full text search index
 AdSchema.index({name: 'text', description: 'text', tags: 'text'});
 
-// Static methods
+//#endregion
+
+//#region Static Methods
+
+/**
+ * Returns avaiables tag list.
+ * @return {Array} Tag lit.
+ */
 AdSchema.statics.getTags = () => {
     return TAGS.slice();;
 };
 
 /**
- * Retun ads list.
+ * Retuns ads list.
  * @param filters
  *  - tag
  *  - forSale: false | true
@@ -91,7 +100,6 @@ AdSchema.statics.list = async (filters, page, per_page, sort, fields) => {
 
     const count = await Ad.find(filters).count();
     const query = Ad.find(filters);
-    console.log('count:', count);
 
     query.skip(page);
     query.limit(per_page);
@@ -101,7 +109,10 @@ AdSchema.statics.list = async (filters, page, per_page, sort, fields) => {
     return { total: count, rows: await query.exec() };
 };
 
-// Hooks
+//#endregion
+
+//#region Hooks
+
 AdSchema.pre('save', function(next) {
     var ad = this;
     
@@ -109,6 +120,8 @@ AdSchema.pre('save', function(next) {
 
     next();
 });
+
+//#endregion
 
 const Ad = mongoose.model('Ad', AdSchema);
 

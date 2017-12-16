@@ -12,20 +12,20 @@ router.use(jwtAuth());
 /**
  * GET /
  * Returns ad list.
- * Query string:
- *  - tag
- *  - for_sale: false | true
- *  - price: 0-50 | 10- | -50 | 50
- *  - name: Regex /^name/i
- *  - page
- *  - per_page
+ * Query params:
+ *  - tag: Optional. Example: tag=mobile | tag=mobile,motor
+ *  - for_sale: Optional. Example: for_sale=false | for_sale=true
+ *  - price: Optional. Example: price=0-50 | price=10- | price=-50 | price=50
+ *  - name: Optional.
+ *  - page: Required. Musts be 0 or greater.
+ *  - per_page: Optional. Musts be 1 or greater.
  */
 router.get('/', [
   query('tags').optional(),
   query('for_sale').optional().isBoolean().withMessage('FOR_SALE_MUST_BE_BOOLEAN'),
   query('price').optional().matches(/^(\d+(\.\d+)?|-\d+(\.\d+)?|\d+(\.\d+)?-|\d+(\.\d+)?-\d+(\.\d+)?)$/).withMessage('PRICE_RANGE_NOT_VALID'),
-  query('page').isInt( {min: 0} ).withMessage('PAGE_MUST_BE_NUMERIC'),
-  query('per_page').optional().isInt( {min: 1} ).withMessage('PER_PAGE_MUST_BE_NUMERIC')
+  query('page').isInt({ min: 0 }).withMessage('PAGE_MUST_BE_NUMERIC'),
+  query('per_page').optional().isInt({ min: 1 }).withMessage('PER_PAGE_MUST_BE_NUMERIC')
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();
@@ -52,7 +52,7 @@ router.get('/', [
 
 /**
  * GET /tags
- * Returns tag list
+ * Returns available tag list.
  */ 
 router.get('/tags', (req, res, next) => {
   const tags = Ad.getTags();

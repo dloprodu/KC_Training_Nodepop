@@ -1,3 +1,9 @@
+/**
+ * @author David López Rguez
+ * @description Nodepop Reestful API
+ * @version 1.0.0
+ */
+
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -7,7 +13,7 @@ const bodyParser = require('body-parser');
 
 const i18n = require('./i18n/i18n');
 
-// Routes
+// routes
 const index = require('./routes/index');
 const users = require('./routes/api/v1/users');
 const ads = require('./routes/api/v1/ads');
@@ -23,15 +29,19 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+
+// log only 4xx and 5xx responses to console
+app.use(logger('dev', {
+  skip: function (req, res) { return res.statusCode < 400; }
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/api/v1/:lang(en|es)/users', setLanguage, users);
-app.use('/api/v1/:lang(en|es)/ads',   setLanguage, ads);
+app.use('/api/v1/:lang(en|es)/users', language, users);
+app.use('/api/v1/:lang(en|es)/ads',   language, ads);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -55,15 +65,15 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.render('error');
 });
 
+//#region Helpers
+
 /**
  * Checks if the current request is a API request.
- * @param {*} req 
- * @return {bool} vasd
+ * @param {Request} req 
+ * @return {bool} 
  */
 function isAPI(req) {
   return req.originalUrl.indexOf('/api/v') === 0;
@@ -71,18 +81,18 @@ function isAPI(req) {
 
 /**
  * Middleware to set the language.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {Function} next 
  */
-function setLanguage(req, res, next) {
+function language(req, res, next) {
   req.language = req.params.lang; 
   next(); 
 }
 
 /**
  * Formats the errors throw by express-validator.
- * @param {any} err 
+ * @param {Error} err 
  * @param {Request} req 
  */
 function formatExpressValidatorErrors(err, req) {
@@ -92,20 +102,25 @@ function formatExpressValidatorErrors(err, req) {
     return;
   }
 
+  err.status = 422; 
+
+  if (!isAPI(req)) {
+    const errInfo = err.array({ onlyFirstError: true })[0];
+    err.message = `Not valid - ${ errInfo.param } ${ errInfo.msg }`;
+    return;
+  }
+
   let errors = {};
   err.array().forEach((e) => {
-    errors[e.param] = i18n( ['errors', e.msg].join('.'), req.language );
+    errors[e.param] = i18n( `errors.${e.msg}`, req.language );
   });
 
-  const errInfo = err.array({ onlyFirstError: true })[0];
-
-  err.status = 422; 
-  err.message = isAPI(req) ? errors : `Not valid - ${ errInfo.param } ${ errInfo.msg }`;
+  err.message = errors;
 }
 
 /**
  * Formats the errors throw by mongoose models.
- * @param {any} err 
+ * @param {Error} err 
  * @param {Request} req 
  */
 function formatMongooseErrors(err, req) {
@@ -115,13 +130,20 @@ function formatMongooseErrors(err, req) {
     return;
   }
 
+  err.status = 422;
+
+  if (!isAPI(req)) {
+    return;
+  }
+
   let errors = {};
   for (let path in err.errors) {
-    errors[path] = i18n( ['errors', err.errors[path].message].join('.'), req.language);
+    errors[path] = i18n( `errors.${err.errors[path].message}`, req.language );
   };
 
-  err.status = 422; 
-  err.message = isAPI(req) ? errors : err.errors.toString();
+  err.message = errors;
 }
+
+//#endregion
 
 module.exports = app;

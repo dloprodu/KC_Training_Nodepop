@@ -38,13 +38,22 @@ const UserSchema = mongoose.Schema({
 }, { collection: 'users' }); // si no se indica collections tomara el nombre
                              // del model en minuscula y pluralizado
 
-// Static methods
-UserSchema.statics.comparePassword = async (candidatePassword, hash) => {
-    const match = await bcrypt.compare(candidatePassword, hash);
-    return match;
+//#region Static Methods
+
+/**
+ * Compares whether a password match with a given hash.
+ * @param {string} password
+ * @param {string} hash
+ * @return {boolean}
+ */
+UserSchema.statics.comparePassword = async (password, hash) => {
+    return await bcrypt.compare(password, hash);
 };
 
-// Hooks
+//#endregion
+
+//#region Hooks
+
 UserSchema.pre('save', function(next) {
     const user = this;
     
@@ -71,6 +80,21 @@ UserSchema.pre('save', function(next) {
         });
     });
 });
+
+UserSchema.post('save', function(error, doc, next) {
+    if (error.name === 'MongoError' && error.code === 11000) {
+        error.errors = {
+            email : {
+                message: 'USER_ALREADY_EXISTS'
+            }
+        };
+        next( error );
+    } else {
+        next(error);
+    }
+});
+
+//#endregion
 
 const User = mongoose.model('User', UserSchema);
 

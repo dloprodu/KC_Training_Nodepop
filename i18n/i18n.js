@@ -8,6 +8,7 @@ const i18n = JSON.parse( fs.readFileSync("i18n/i18n.json") );
  * Translates the token for the language given.
  * @param {string} token 
  * @param {string} lang 
+ * @returns {string} returns translation whether the token exists or the token in other case.
  */
 function translate( token, lang ) {
     if (!token || !lang) {
