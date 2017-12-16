@@ -32,7 +32,7 @@ El script generará 10 usuarios y 50 anuncios que vinculará aleatoriamente a lo
 
 ## Respuestas de la API
 
-Las respuestas de la API están estandarizadas y devuelven una estructura común con lo siguientes campos.
+Las respuestas de la API están estandarizadas y devuelven una estructura común con los siguientes campos.
 ```json
 {
 	"version": "1.0.0",
@@ -106,27 +106,27 @@ Ad[Ad] -- A user can have zero, one or more ads --> User[User]
 ### User
 ```json
 {
-	"type" = "user",
-	"name" = "",
-	"gender" = ["male"|"female"],
-	"thumbnail" = "",
-	"email" = "",
-	"password" = "",
-	"createdAt" = ""
+	"type": "user",
+	"name": "",
+	"gender": ["male","female"],
+	"thumbnail": "",
+	"email": "",
+	"password": "",
+	"createdAt": ""
 }
 ```
 ### Ad
 ```json
 {
-	"type" = "ad",
-	"user" = "",
-	"name" = "",
-	"description" = "",
-	"forSale" = [true|false],
-	"price" = 0,
-	"photo" = "",
-	"tags" = [],
-	"createdAt" = ""
+	"type": "ad",
+	"user": "",
+	"name": "",
+	"description": "",
+	"forSale": [true,false],
+	"price": 0,
+	"photo": "",
+	"tags": [],
+	"createdAt": ""
 }
 ```
 ## Registro de usuarios
@@ -234,7 +234,7 @@ Ad[Ad] -- A user can have zero, one or more ads --> User[User]
 |`/api/v1/:lang/ads`|`GET`|`name,tags,for_sale,price,page,per_page,sort,fields,token`|`x-access-token`|
 ### Query params
 - **name**: Permite filtrar por nombre. Puede ser el nombre completo o parte inicial del nombre. Insensitivo a mayusculas y minúsculas.
-- **tags**: Permite filtrar por tags. 
+- **tags**: Permite filtrar por tags. **Si indica varios tags separados por coma se devolveran los anuncios que contengan alguno e esos tags**.
 - **for_sale**: Permite filtrar por tipo de anuncio (true o false).
 - **price**: Permite filtrar por precio.
   - 50: coincide exactamente con el precio indicado.
