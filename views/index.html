@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+      <h1 id="nodepop-restful-api">Nodepop Restful API</h1>
+      <h4 id="david-lópez-rguez">David López Rguez</h4>
+      <h2 id="información-general">Información general</h2>
+      <p><strong>Nodepop</strong> es un API para la gestión de anuncios. La api permite las siguientes acciones: - Registro de usuarios. - Autenticación. - Listar etiquetas disponibles para los anuncios. - Listar anuncios.</p>
+      <p>Para iniciar el API: <code>npm run start</code> <br> Para iniciar el cluster: <code>npm run cluster</code></p>
+      <h2 id="configuración-de-la-api">Configuración de la API</h2>
+      <p>Para configurar correctamente el API crear un fichero <em>.env</em> con los siguientes parámetros de configuración: - <strong>MONGODB_CONNECTIONSTRING</strong>: URL de conexión a una instancia de MongoDB. - <strong>SALT_WORK_FACTOR</strong>: Numero entero que será el factor para generar el hash del password (10 por ejemplo). - <strong>JWT_SECRET</strong>: Cadena alfanumérica que servirá como clave secreta para generar los tokens de autenticación. - <strong>JWT_EXPIRESIN</strong>: Tiempo de espiración del JWT.</p>
+      <pre><code>MONGODB_CONNECTIONSTRING=mongodb://localhost/nodepop
+      SALT_WORK_FACTOR=10
+      JWT_SECRET=AGDW2123lSAL204AL02LAUS2LS
+      JWT_EXPIRESIN=2d</code></pre>
+      <h2 id="inicialización-de-base-de-datos-de-pruebas">Inicialización de base de datos de pruebas</h2>
+      <p>Para generar una base de datos de prueba ejecutar el comando siguiente:</p>
+      <pre><code>npm run installDB</code></pre>
+      <p>El script generará 10 usuarios y 50 anuncios que vinculará aleatoriamente a los usuarios.</p>
+      <h2 id="respuestas-de-la-api">Respuestas de la API</h2>
+      <p>Las respuestas de la API están estandarizadas y devuelven una estructura común con los siguientes campos.</p>
+      <pre class="sourceCode json" id="cb3"><code class="sourceCode json"><div class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb3-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;success&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb3-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;OK&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T18:20:34.871Z&quot;</span></div>
+      <div class="sourceLine" id="cb3-6" data-line-number="6"><span class="fu">}</span></div></code></pre>
+      <p>En el caso de que la llamada devuelva algún dato se añade el campo <strong>data</strong>.</p>
+      <pre class="sourceCode json" id="cb4"><code class="sourceCode json"><div class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb4-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;success&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;OK&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb4-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T18:21:06.702Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb4-6" data-line-number="6">    <span class="dt">&quot;data&quot;</span><span class="fu">:</span> <span class="ot">[</span></div>
+      <div class="sourceLine" id="cb4-7" data-line-number="7">        <span class="st">&quot;work&quot;</span><span class="ot">,</span></div>
+      <div class="sourceLine" id="cb4-8" data-line-number="8">        <span class="st">&quot;lifestyle&quot;</span><span class="ot">,</span></div>
+      <div class="sourceLine" id="cb4-9" data-line-number="9">        <span class="st">&quot;motor&quot;</span><span class="ot">,</span></div>
+      <div class="sourceLine" id="cb4-10" data-line-number="10">        <span class="st">&quot;mobile&quot;</span></div>
+      <div class="sourceLine" id="cb4-11" data-line-number="11">    <span class="ot">]</span></div>
+      <div class="sourceLine" id="cb4-12" data-line-number="12"><span class="fu">}</span></div></code></pre>
+      <p>En el caso de que la llamada devuelva un resultado paginado se añade el campo <strong>data</strong> y <strong>total</strong>. Este último representa el número total de elementos.</p>
+      <pre class="sourceCode json" id="cb5"><code class="sourceCode json"><div class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb5-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;success&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;OK&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T18:21:06.702Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-6" data-line-number="6">    <span class="dt">&quot;data&quot;</span><span class="fu">:</span> <span class="ot">[</span></div>
+      <div class="sourceLine" id="cb5-7" data-line-number="7">        <span class="fu">{</span></div>
+      <div class="sourceLine" id="cb5-8" data-line-number="8">            <span class="dt">&quot;_id&quot;</span><span class="fu">:</span> <span class="st">&quot;5a3444d83241a4ceea3457f8&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-9" data-line-number="9">            <span class="dt">&quot;user&quot;</span><span class="fu">:</span> <span class="st">&quot;5a3444d73241a4ceea3457f3&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-10" data-line-number="10">            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Clothes&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-11" data-line-number="11">            <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Ri miz zuzuja tufupa sis.&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-12" data-line-number="12">            <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="fl">6227.88</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-13" data-line-number="13">            <span class="dt">&quot;photo&quot;</span><span class="fu">:</span> <span class="st">&quot;images/ads/500x300/05.jpg&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-14" data-line-number="14">            <span class="dt">&quot;createdAt&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-15T21:55:36.049Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-15" data-line-number="15">            <span class="dt">&quot;tags&quot;</span><span class="fu">:</span> <span class="ot">[</span></div>
+      <div class="sourceLine" id="cb5-16" data-line-number="16">                <span class="st">&quot;lifestyle&quot;</span><span class="ot">,</span></div>
+      <div class="sourceLine" id="cb5-17" data-line-number="17">                <span class="st">&quot;mobile&quot;</span></div>
+      <div class="sourceLine" id="cb5-18" data-line-number="18">            <span class="ot">]</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-19" data-line-number="19">            <span class="dt">&quot;forSale&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-20" data-line-number="20">            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;ad&quot;</span></div>
+      <div class="sourceLine" id="cb5-21" data-line-number="21">        <span class="fu">}</span></div>
+      <div class="sourceLine" id="cb5-22" data-line-number="22">    <span class="ot">]</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb5-23" data-line-number="23">    <span class="dt">&quot;total&quot;</span><span class="fu">:</span> <span class="dv">19</span></div>
+      <div class="sourceLine" id="cb5-24" data-line-number="24"><span class="fu">}</span></div></code></pre>
+      <p>En caso de error se añade el campo <strong>error</strong>.</p>
+      <pre class="sourceCode json" id="cb6"><code class="sourceCode json"><div class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb6-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb6-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;error&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb6-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;Query params error&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb6-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T19:13:25.886Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb6-6" data-line-number="6">    <span class="dt">&quot;error&quot;</span><span class="fu">:</span> <span class="fu">{</span></div>
+      <div class="sourceLine" id="cb6-7" data-line-number="7">        <span class="dt">&quot;page&quot;</span><span class="fu">:</span> <span class="st">&quot;&#39;page&#39; debe ser un múmero&quot;</span></div>
+      <div class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">    }</span></div>
+      <div class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">}</span></div></code></pre>
+      <h2 id="modelo">Modelo</h2>
+      <pre class="mermaid"><code>graph LR
+      Ad[Ad] -- A user can have zero, one or more ads --&gt; User[User]</code></pre>
+      <h3 id="user">User</h3>
+      <pre class="sourceCode json" id="cb8"><code class="sourceCode json"><div class="sourceLine" id="cb8-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb8-2" data-line-number="2">    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;user&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb8-3" data-line-number="3">    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb8-4" data-line-number="4">    <span class="dt">&quot;gender&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;male&quot;</span><span class="ot">,</span><span class="st">&quot;female&quot;</span><span class="ot">]</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb8-5" data-line-number="5">    <span class="dt">&quot;thumbnail&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb8-6" data-line-number="6">    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb8-7" data-line-number="7">    <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb8-8" data-line-number="8">    <span class="dt">&quot;createdAt&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span></div>
+      <div class="sourceLine" id="cb8-9" data-line-number="9"><span class="fu">}</span></div></code></pre>
+      <h3 id="ad">Ad</h3>
+      <pre class="sourceCode json" id="cb9"><code class="sourceCode json"><div class="sourceLine" id="cb9-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb9-2" data-line-number="2">    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;ad&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb9-3" data-line-number="3">    <span class="dt">&quot;user&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb9-4" data-line-number="4">    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb9-5" data-line-number="5">    <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb9-6" data-line-number="6">    <span class="dt">&quot;forSale&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="kw">true</span><span class="ot">,</span><span class="kw">false</span><span class="ot">]</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb9-7" data-line-number="7">    <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb9-8" data-line-number="8">    <span class="dt">&quot;photo&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb9-9" data-line-number="9">    <span class="dt">&quot;tags&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb9-10" data-line-number="10">    <span class="dt">&quot;createdAt&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span></div>
+      <div class="sourceLine" id="cb9-11" data-line-number="11"><span class="fu">}</span></div></code></pre>
+      <h2 id="registro-de-usuarios">Registro de usuarios</h2>
+      <table>
+      <thead>
+      <tr class="header">
+      <th>URI</th>
+      <th>METHOD</th>
+      <th>BODY</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="odd">
+      <td><code>/api/v1/:lang/users/signup</code></td>
+      <td><code>POST</code></td>
+      <td><code>{ name, gender, email, password }</code></td>
+      </tr>
+      </tbody>
+      </table>
+      <h3 id="example">Example</h3>
+      <p><code>http://localhost:3000/api/v1/es/users/signup</code> ##### Body</p>
+      <pre class="sourceCode json" id="cb10"><code class="sourceCode json"><div class="sourceLine" id="cb10-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb10-2" data-line-number="2">    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Carlos&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb10-3" data-line-number="3">    <span class="dt">&quot;gender&quot;</span><span class="fu">:</span> <span class="st">&quot;male&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb10-4" data-line-number="4">    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;carlos@test.com&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb10-5" data-line-number="5">    <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;1234&quot;</span></div>
+      <div class="sourceLine" id="cb10-6" data-line-number="6"><span class="fu">}</span></div></code></pre>
+      <h5 id="response">Response</h5>
+      <pre class="sourceCode json" id="cb11"><code class="sourceCode json"><div class="sourceLine" id="cb11-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb11-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb11-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;success&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb11-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;OK&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb11-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T18:21:41.752Z&quot;</span></div>
+      <div class="sourceLine" id="cb11-6" data-line-number="6"><span class="fu">}</span></div></code></pre>
+      <h5 id="error">Error</h5>
+      <pre class="sourceCode json" id="cb12"><code class="sourceCode json"><div class="sourceLine" id="cb12-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb12-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb12-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;error&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb12-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;Query params error&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb12-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T20:45:12.593Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb12-6" data-line-number="6">    <span class="dt">&quot;error&quot;</span><span class="fu">:</span> <span class="fu">{</span></div>
+      <div class="sourceLine" id="cb12-7" data-line-number="7">        <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;El email no es válido&quot;</span></div>
+      <div class="sourceLine" id="cb12-8" data-line-number="8">    <span class="fu">}</span></div>
+      <div class="sourceLine" id="cb12-9" data-line-number="9"><span class="fu">}</span></div></code></pre>
+      <h2 id="autenticación">Autenticación</h2>
+      <table>
+      <thead>
+      <tr class="header">
+      <th>URI</th>
+      <th>METHOD</th>
+      <th>BODY</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="odd">
+      <td><code>/api/v1/:lang/users/login</code></td>
+      <td><code>POST</code></td>
+      <td><code>{ email, password }</code></td>
+      </tr>
+      </tbody>
+      </table>
+      <h3 id="example-1">Example</h3>
+      <p><code>http://localhost:3000/api/v1/es/users/login</code> ##### Body</p>
+      <pre class="sourceCode json" id="cb13"><code class="sourceCode json"><div class="sourceLine" id="cb13-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb13-2" data-line-number="2">    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;adam@test.com&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb13-3" data-line-number="3">    <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;1234&quot;</span></div>
+      <div class="sourceLine" id="cb13-4" data-line-number="4"><span class="fu">}</span></div></code></pre>
+      <h5 id="response-1">Response</h5>
+      <pre class="sourceCode json" id="cb14"><code class="sourceCode json"><div class="sourceLine" id="cb14-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb14-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb14-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;success&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb14-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;OK&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb14-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T20:22:06.386Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb14-6" data-line-number="6">    <span class="dt">&quot;data&quot;</span><span class="fu">:</span> <span class="fu">{</span></div>
+      <div class="sourceLine" id="cb14-7" data-line-number="7">        <span class="dt">&quot;token&quot;</span><span class="fu">:</span> <span class="st">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNWEzNTdlMzQzZmIxN2JmM2Q4NDBmYjlkIiwiaWF0IjoxNTEzNDU1NzI2LCJleHAiOjE1MTM2Mjg1MjZ9.G40iThNnq63TkZkOwG8M14yjTUow7U4ys52hRuS2VE4&quot;</span></div>
+      <div class="sourceLine" id="cb14-8" data-line-number="8">    <span class="fu">}</span></div>
+      <div class="sourceLine" id="cb14-9" data-line-number="9"><span class="fu">}</span></div></code></pre>
+      <h5 id="error-1">Error</h5>
+      <pre class="sourceCode json" id="cb15"><code class="sourceCode json"><div class="sourceLine" id="cb15-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb15-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb15-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;error&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb15-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;Authentication error&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb15-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T20:36:03.554Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb15-6" data-line-number="6">    <span class="dt">&quot;error&quot;</span><span class="fu">:</span> <span class="st">&quot;Usuario o contraseña incorrecta&quot;</span></div>
+      <div class="sourceLine" id="cb15-7" data-line-number="7"><span class="fu">}</span></div></code></pre>
+      <h2 id="listado-de-etiquetas">Listado de etiquetas</h2>
+      <table>
+      <thead>
+      <tr class="header">
+      <th>URI</th>
+      <th>METHOD</th>
+      <th>QUERY STRING</th>
+      <th>HEADER</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="odd">
+      <td><code>/api/v1/:lang/ads/tags</code></td>
+      <td><code>GET</code></td>
+      <td><code>token</code></td>
+      <td><code>x-access-token</code></td>
+      </tr>
+      </tbody>
+      </table>
+      <h3 id="example-2">Example</h3>
+      <p><code>http://localhost:3000/api/v1/es/ads/tags?token=</code> ##### Response</p>
+      <pre class="sourceCode json" id="cb16"><code class="sourceCode json"><div class="sourceLine" id="cb16-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb16-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb16-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;success&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb16-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;OK&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb16-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T18:21:06.702Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb16-6" data-line-number="6">    <span class="dt">&quot;data&quot;</span><span class="fu">:</span> <span class="ot">[</span></div>
+      <div class="sourceLine" id="cb16-7" data-line-number="7">        <span class="st">&quot;work&quot;</span><span class="ot">,</span></div>
+      <div class="sourceLine" id="cb16-8" data-line-number="8">        <span class="st">&quot;lifestyle&quot;</span><span class="ot">,</span></div>
+      <div class="sourceLine" id="cb16-9" data-line-number="9">        <span class="st">&quot;motor&quot;</span><span class="ot">,</span></div>
+      <div class="sourceLine" id="cb16-10" data-line-number="10">        <span class="st">&quot;mobile&quot;</span></div>
+      <div class="sourceLine" id="cb16-11" data-line-number="11">    <span class="ot">]</span></div>
+      <div class="sourceLine" id="cb16-12" data-line-number="12"><span class="fu">}</span></div></code></pre>
+      <h2 id="listado-de-anuncios">Listado de anuncios</h2>
+      <table>
+      <colgroup>
+      <col style="width: 23%" />
+      <col style="width: 44%" />
+      <col style="width: 19%" />
+      <col style="width: 12%" />
+      </colgroup>
+      <thead>
+      <tr class="header">
+      <th>URI</th>
+      <th>METHOD</th>
+      <th>QUERY STRING</th>
+      <th>HEADER</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="odd">
+      <td><code>/api/v1/:lang/ads</code></td>
+      <td><code>GET</code></td>
+      <td><code>name,tags,for_sale,price,page,per_page,sort,fields,token</code></td>
+      <td><code>x-access-token</code></td>
+      </tr>
+      </tbody>
+      </table>
+      <h3 id="query-params">Query params</h3>
+      <ul>
+      <li><strong>name</strong>: Permite filtrar por nombre. Puede ser el nombre completo o parte inicial del nombre. Insensitivo a mayusculas y minúsculas.</li>
+      <li><strong>tags</strong>: Permite filtrar por tags. <strong>Si se indican varios tags separados por coma se devolveran los anuncios que contengan alguno de esos tags</strong>. Ejemplo: <code>tag=mobile,lifestyle</code></li>
+      <li><strong>for_sale</strong>: Permite filtrar por tipo de anuncio (true o false).</li>
+      <li><strong>price</strong>: Permite filtrar por precio.
+      <ul>
+      <li>50: coincide exactamente con el precio indicado.</li>
+      <li>-50: menores o iguales al precio indicado.</li>
+      <li>50-: mayores o iguales al precio indicado.</li>
+      <li>10-50: dentro del rango especificado.</li>
+      </ul></li>
+      <li><strong>page</strong>: Página.</li>
+      <li><strong>per_page</strong>: Número de elementos por página.</li>
+      <li><strong>sort</strong>: Permite ordenar por algún campo.</li>
+      <li><strong>fields</strong>: Permite seleccionar los campos que queremos obtener. Ejemplo: <code>fields=name description</code> ### Example <code>http://localhost:3000/api/v1/es/ads?page=0&amp;per_page=1&amp;price=5000-&amp;tag=mobile&amp;token=</code> ##### Response</li>
+      </ul>
+      <pre class="sourceCode json" id="cb17"><code class="sourceCode json"><div class="sourceLine" id="cb17-1" data-line-number="1"><span class="fu">{</span></div>
+      <div class="sourceLine" id="cb17-2" data-line-number="2">    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-3" data-line-number="3">    <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;success&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-4" data-line-number="4">    <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;OK&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-5" data-line-number="5">    <span class="dt">&quot;datetime&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T20:51:35.315Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-6" data-line-number="6">    <span class="dt">&quot;data&quot;</span><span class="fu">:</span> <span class="ot">[</span></div>
+      <div class="sourceLine" id="cb17-7" data-line-number="7">        <span class="fu">{</span></div>
+      <div class="sourceLine" id="cb17-8" data-line-number="8">            <span class="dt">&quot;_id&quot;</span><span class="fu">:</span> <span class="st">&quot;5a35658259c395e6c2030d3f&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-9" data-line-number="9">            <span class="dt">&quot;user&quot;</span><span class="fu">:</span> <span class="st">&quot;5a35658259c395e6c2030d3e&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-10" data-line-number="10">            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Mountain Bike&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-11" data-line-number="11">            <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Ku jo pepbe tukiru ruk.&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-12" data-line-number="12">            <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="fl">6627.47</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-13" data-line-number="13">            <span class="dt">&quot;photo&quot;</span><span class="fu">:</span> <span class="st">&quot;images/ads/500x300/01.jpg&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-14" data-line-number="14">            <span class="dt">&quot;__v&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-15" data-line-number="15">            <span class="dt">&quot;createdAt&quot;</span><span class="fu">:</span> <span class="st">&quot;2017-12-16T18:27:14.594Z&quot;</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-16" data-line-number="16">            <span class="dt">&quot;tags&quot;</span><span class="fu">:</span> <span class="ot">[</span></div>
+      <div class="sourceLine" id="cb17-17" data-line-number="17">                <span class="st">&quot;lifestyle&quot;</span><span class="ot">,</span></div>
+      <div class="sourceLine" id="cb17-18" data-line-number="18">                <span class="st">&quot;mobile&quot;</span><span class="ot">,</span></div>
+      <div class="sourceLine" id="cb17-19" data-line-number="19">                <span class="st">&quot;motor&quot;</span></div>
+      <div class="sourceLine" id="cb17-20" data-line-number="20">            <span class="ot">]</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-21" data-line-number="21">            <span class="dt">&quot;forSale&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-22" data-line-number="22">            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;ad&quot;</span></div>
+      <div class="sourceLine" id="cb17-23" data-line-number="23">        <span class="fu">}</span></div>
+      <div class="sourceLine" id="cb17-24" data-line-number="24">    <span class="ot">]</span><span class="fu">,</span></div>
+      <div class="sourceLine" id="cb17-25" data-line-number="25">    <span class="dt">&quot;total&quot;</span><span class="fu">:</span> <span class="dv">20</span></div>
+      <div class="sourceLine" id="cb17-26" data-line-number="26"><span class="fu">}</span></div></code></pre>      
+  </body>
+</html>
