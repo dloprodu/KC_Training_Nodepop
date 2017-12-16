@@ -11,7 +11,12 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const NodepopResponse = require('./lib/NodepopResponse');
+const NodepopDataResponse = require('./lib/NodepopDataResponse');
+const NodepopPaginatedResponse = require('./lib/NodepopPaginatedResponse');
+
 const NodepopError = require('./lib/NodepopError');
+const NodepopErrorResponse = require('./lib/NodepopErrorResponse');
 
 // routes
 const index = require('./routes/index');
@@ -39,6 +44,24 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// standardized responses for Nodepop API
+app.use((req, res, next) => {
+
+  res.nodepop = () => {
+    res.status(200).json(new NodepopResponse());
+  };
+
+  res.nodepopData = (data) => {
+    res.status(200).json(new NodepopDataResponse(data));
+  };
+
+  res.nodepopPaginatedData = (rows, total) => {
+    res.status(200).json(new NodepopPaginatedResponse(rows, total));
+  };
+
+  next();
+});
+
 app.use('/', index);
 app.use('/api/v1/:lang(en|es)/users', language, users);
 app.use('/api/v1/:lang(en|es)/ads',   language, ads);
@@ -57,7 +80,7 @@ app.use(function(err, req, res, next) {
   res.status(customError.status || 500);
 
   if (isAPI(req)) {
-    res.json({ success: false, error: customError.message });
+    res.json(new NodepopErrorResponse(customError));
     return;
   }
   

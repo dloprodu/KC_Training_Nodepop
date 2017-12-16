@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
 
@@ -44,7 +46,8 @@ router.get('/', [
     const fields = req.query.fields;
 
     const result = await Ad.list(filter, page, per_page, sort, fields);
-    res.json({ success: true, total: result.total, result: result.rows });
+
+    res.nodepopPaginatedData( result.rows, result.total );
   } catch (err) {
       next(err);
   }
@@ -56,7 +59,7 @@ router.get('/', [
  */ 
 router.get('/tags', (req, res, next) => {
   const tags = Ad.getTags();
-  res.json(tags);
+  res.nodepopData(tags);
 });
 
 

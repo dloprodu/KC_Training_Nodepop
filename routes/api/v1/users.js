@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
@@ -19,7 +21,7 @@ router.post('/signup', (req, res, next) => {
           return;
       }
 
-      res.json({ success: true });
+      res.nodepop();
   });
 });
 
@@ -58,7 +60,7 @@ router.post('/login', [
                     return;
                 }
     
-                res.json({ success: true, token: token});
+                res.nodepopData({ token });
             }
         );
     } catch (err) {
