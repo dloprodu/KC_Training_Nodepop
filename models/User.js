@@ -16,7 +16,7 @@ const UserSchema = mongoose.Schema({
     },
     gender: { 
         type: String, 
-        require: [true, 'GENDER_REQUIRED'], 
+        required: [true, 'GENDER_REQUIRED'], 
         enum: { values: ['male', 'female'], message: 'UNKNOWN_GENDER' } 
     },
     thumbnail: { type: String },

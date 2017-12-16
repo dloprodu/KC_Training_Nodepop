@@ -18,7 +18,10 @@
             "FOR_SALE_MUST_BE_BOOLEAN": "'for_sale' must be a 'true' or 'false'",
             "PRICE_RANGE_NOT_VALID": "'price' is not a valid range",
             "PAGE_MUST_BE_NUMERIC": "'page' must be a numeric",
-            "PER_PAGE_MUST_BE_NUMERIC": "'per_page' must be a numeric"
+            "PER_PAGE_MUST_BE_NUMERIC": "'per_page' must be a numeric",
+            "INCORRECT_USER_OR_PASS": "Incorrect user or password",
+            "NO_TOKEN_PROVIDED": "No token provided",
+            "INVALID_TOKEN": "Invalid token"
         }
     },
     "es": {
@@ -32,7 +35,7 @@
             "UNKNOWN_TAG": "Etiqueta desconocida",
             "AT_LEAST_ONE_TAG": "Debes indicar almenos una etiqueta",
             "GENDER_REQUIRED": "El género es obligatorio",
-            "UNKNOWN_GENDER": "El genero debe ser 'hombre' o 'mujer'",
+            "UNKNOWN_GENDER": "El genero debe ser 'male' o 'female'",
             "EMAIL_REQUIRED": "El email es obligatorio",
             "EMAIL_NOT_VALID": "El email no es válido",
             "PASSWORD_REQUIRED": "El password es obligatorio",
@@ -40,7 +43,10 @@
             "FOR_SALE_MUST_BE_BOOLEAN": "'for_sale' debe ser ser 'true' or 'false'",
             "PRICE_RANGE_NOT_VALID": "'price' no contiene un rango válido",
             "PAGE_MUST_BE_NUMERIC": "'page' debe ser un múmero",
-            "PER_PAGE_MUST_BE_NUMERIC": "'per_page' debe ser un número"
+            "PER_PAGE_MUST_BE_NUMERIC": "'per_page' debe ser un número",
+            "INCORRECT_USER_OR_PASS": "Usuario o contraseña incorrecta",
+            "NO_TOKEN_PROVIDED": "Token no proporcionado",
+            "INVALID_TOKEN": "Token inválido"
         }
     }
 }

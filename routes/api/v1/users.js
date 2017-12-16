@@ -41,9 +41,9 @@ router.post('/login', [
         const user = await User.findOne({ email: email }).exec();
 
         if (!user || !await User.comparePassword(password, user.password)) {
-            res.status = 401;
-            res.json({ error: 'Credenciales incorrectas' });
-            return;
+            const err = new Error('INCORRECT_USER_OR_PASS');
+            err.status = 401;
+            return next(err);
         }
     
         jwt.sign(
