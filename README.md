@@ -9,6 +9,9 @@
 - Listar etiquetas disponibles para los anuncios.
 - Listar anuncios.
 
+Para iniciar el API: `npm run start`
+Para iniciar el cluster: `npm run cluster`
+
 ## Configuración de la API
 
 Para configurar correctamente el API crear un fichero *.env* con los siguientes parámetros de configuración:
@@ -234,7 +237,7 @@ Ad[Ad] -- A user can have zero, one or more ads --> User[User]
 |`/api/v1/:lang/ads`|`GET`|`name,tags,for_sale,price,page,per_page,sort,fields,token`|`x-access-token`|
 ### Query params
 - **name**: Permite filtrar por nombre. Puede ser el nombre completo o parte inicial del nombre. Insensitivo a mayusculas y minúsculas.
-- **tags**: Permite filtrar por tags. **Si indica varios tags separados por coma se devolveran los anuncios que contengan alguno e esos tags**.
+- **tags**: Permite filtrar por tags. **Si se indican varios tags separados por coma se devolveran los anuncios que contengan alguno de esos tags**.
 - **for_sale**: Permite filtrar por tipo de anuncio (true o false).
 - **price**: Permite filtrar por precio.
   - 50: coincide exactamente con el precio indicado.
