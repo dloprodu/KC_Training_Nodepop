@@ -123,19 +123,29 @@ En caso de error se añade el campo **error**.
 
 ```mermaid
 graph LR
-A[Ad] -- A user can have one or more ads --> B[User]
+Ad[Ad] -- A user can have zero, one or more ads --> User[User]
 ```
 
 ## Registro de usuarios
 
 |URI             |METHOD                         |BODY                 |
 |----------------|-------------------------------|---------------------|
-|`/api/v1/**:lang**/users/signup`|`POST`|`{ name, email, password }`|
-
-
+|`/api/v1/:lang/users/signup`|`POST`|`{ name, email, password }`|
 
 ## Autenticación
 
+|URI             |METHOD                         |BODY                 |
+|----------------|-------------------------------|---------------------|
+|`/api/v1/:lang/users/login`|`POST`|`{ email, password }`|
+
 ## Listado de etiquetas
 
+|URI             |METHOD                         |QUERY STRING |HEADER  |
+|----------------|-------------------------------|-------------|--------|
+|`/api/v1/:lang/ads/tags`|`GET`|`token`|`x-access-token`|
+
 ## Listado de anuncios
+
+|URI             |METHOD                         |QUERY STRING |HEADER  |
+|----------------|-------------------------------|-------------|--------|
+|`/api/v1/:lang/ads`|`GET`|`tags,for_sale,price,page,per_page,token`|`x-access-token`|
