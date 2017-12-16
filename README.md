@@ -10,6 +10,7 @@
 - Listar anuncios.
 
 Para iniciar el API: `npm run start`
+<br>
 Para iniciar el cluster: `npm run cluster`
 
 ## Configuración de la API
@@ -237,7 +238,7 @@ Ad[Ad] -- A user can have zero, one or more ads --> User[User]
 |`/api/v1/:lang/ads`|`GET`|`name,tags,for_sale,price,page,per_page,sort,fields,token`|`x-access-token`|
 ### Query params
 - **name**: Permite filtrar por nombre. Puede ser el nombre completo o parte inicial del nombre. Insensitivo a mayusculas y minúsculas.
-- **tags**: Permite filtrar por tags. **Si se indican varios tags separados por coma se devolveran los anuncios que contengan alguno de esos tags**.
+- **tags**: Permite filtrar por tags. **Si se indican varios tags separados por coma se devolveran los anuncios que contengan alguno de esos tags**. Ejemplo: `tag=mobile,lifestyle`
 - **for_sale**: Permite filtrar por tipo de anuncio (true o false).
 - **price**: Permite filtrar por precio.
   - 50: coincide exactamente con el precio indicado.
@@ -247,7 +248,7 @@ Ad[Ad] -- A user can have zero, one or more ads --> User[User]
 - **page**: Página.
 - **per_page**: Número de elementos por página.
 - **sort**: Permite ordenar por algún campo.
-- **fields**: Permite seleccionar los campos que queremos obtener.
+- **fields**: Permite seleccionar los campos que queremos obtener. Ejemplo: `fields=name description`
 ### Example
 `http://localhost:3000/api/v1/es/ads?page=0&per_page=1&price=5000-&tag=mobile&token=`
 ##### Response
