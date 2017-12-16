@@ -25,7 +25,7 @@ JWT_EXPIRESIN=2d
 
 ## Inicialización de base de datos de pruebas
 
-Para generar una base de datos de prueba ejecutar el comando siguiente:
+Despues de crear el fichero *.env* con la conexción a la MongoDB se puede generar una base de datos de prueba ejecutando el comando siguiente:
 ```
 npm run installDB
 ```
@@ -61,7 +61,7 @@ En el caso de que la llamada devuelva algún dato se añade el campo **data**.
 }
 ```
 
-En el caso de que la llamada devuelva un resultado paginado se añade el campo **data** y **total**.
+En el caso de que la llamada devuelva un resultado paginado se añade el campo **data** y **total**. Este último representa el número total de elementos.
 
 ```json
 {
@@ -119,7 +119,20 @@ En caso de error se añade el campo **error**.
 }
 ```
 
+## Modelo
+
+```mermaid
+graph LR
+A[Ad] -- A user can have one or more ads --> B[User]
+```
+
 ## Registro de usuarios
+
+|URI             |METHOD                         |BODY                 |
+|----------------|-------------------------------|---------------------|
+|`/api/v1/**:lang**/users/signup`|`POST`|`{ name, email, password }`|
+
+
 
 ## Autenticación
 
