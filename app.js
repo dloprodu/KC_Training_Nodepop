@@ -11,7 +11,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const i18n = require('./i18n/i18n');
+const NodepopError = require('./lib/NodepopError');
 
 // routes
 const index = require('./routes/index');
@@ -52,18 +52,17 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  formatExpressValidatorErrors(err, req);
-  formatMongooseErrors(err, req);
+  const customError = new NodepopError(err, req.language, isAPI(req));
 
-  res.status(err.status || 500);
+  res.status(customError.status || 500);
 
   if (isAPI(req)) {
-    res.json({ success: false, error: err.message });
+    res.json({ success: false, error: customError.message });
     return;
   }
   
   // set locals, only providing error in development
-  res.locals.message = err.message;
+  res.locals.message = customError.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.render('error');
 });
@@ -88,60 +87,6 @@ function isAPI(req) {
 function language(req, res, next) {
   req.language = req.params.lang; 
   next(); 
-}
-
-/**
- * Formats the errors throw by express-validator.
- * @param {Error} err 
- * @param {Request} req 
- */
-function formatExpressValidatorErrors(err, req) {
-  // Los errores que genera express-validator
-  // tienen una función array.
-  if (!err.array) {
-    return;
-  }
-
-  err.status = 422; 
-
-  if (!isAPI(req)) {
-    const errInfo = err.array({ onlyFirstError: true })[0];
-    err.message = `Not valid - ${ errInfo.param } ${ errInfo.msg }`;
-    return;
-  }
-
-  let errors = {};
-  err.array().forEach((e) => {
-    errors[e.param] = i18n( `errors.${e.msg}`, req.language );
-  });
-
-  err.message = errors;
-}
-
-/**
- * Formats the errors throw by mongoose models.
- * @param {Error} err 
- * @param {Request} req 
- */
-function formatMongooseErrors(err, req) {
-  // Los errores que genera Mongoose tienen un
-  // array errors
-  if (!err.errors) {
-    return;
-  }
-
-  err.status = 422;
-
-  if (!isAPI(req)) {
-    return;
-  }
-
-  let errors = {};
-  for (let path in err.errors) {
-    errors[path] = i18n( `errors.${err.errors[path].message}`, req.language );
-  };
-
-  err.message = errors;
 }
 
 //#endregion
