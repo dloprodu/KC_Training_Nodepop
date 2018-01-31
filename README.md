@@ -13,6 +13,14 @@ Para iniciar el API: `npm run start`
 <br>
 Para iniciar el cluster: `npm run cluster`
 
+## Demo desplegada en AWS (DevOps)
+
+[Index - breve descripción de la API](http://ec2-18-218-129-147.us-east-2.compute.amazonaws.com)
+
+__DNS__: http://ec2-18-218-129-147.us-east-2.compute.amazonaws.com
+
+__IP__: http://18.218.129.147
+
 ## Configuración de la API
 
 Para configurar correctamente el API crear un fichero *.env* con los siguientes parámetros de configuración:
